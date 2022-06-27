@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
+@MappedSuperclass
 public abstract class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -13,7 +13,6 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected String nome;
-    @Column(unique = true)
     protected String email;
     protected String contato;
     protected LocalDate dataCriacao = LocalDate.now();

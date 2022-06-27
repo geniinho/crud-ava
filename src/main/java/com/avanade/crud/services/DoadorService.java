@@ -27,9 +27,12 @@ public class DoadorService {
         return doadorRepository.save(doador);
     }
 
-    public Doador update (Long id,Doador doador){
-        doador.setId(id);
-        return doadorRepository.save(doador);
+    public Doador update (Doador doador){
+        var entity = doadorRepository.findById(doador.getId()).get();
+        entity.setNome(doador.getNome());
+        entity.setEmail(doador.getEmail());
+        entity.setContato(doador.getContato());
+        return doadorRepository.save(entity);
     }
 
     public void delete(Long id){
