@@ -27,9 +27,8 @@ public class Doacao implements Serializable {
     public Doacao() {
     }
 
-    public Doacao(Long id, LocalDate dataDoacao, String titulo, String observacoes, Doador doador, Donatario donatario) {
+    public Doacao(Long id, String titulo, String observacoes, Doador doador, Donatario donatario) {
         this.id = id;
-        this.dataDoacao = dataDoacao;
         this.titulo = titulo;
         this.observacoes = observacoes;
         this.doador = doador;

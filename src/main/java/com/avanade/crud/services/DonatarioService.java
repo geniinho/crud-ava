@@ -27,9 +27,12 @@ public class DonatarioService {
         return donatarioRepository.save(donatario);
     }
 
-    public Donatario update (Long id,Donatario donatario){
-        donatario.setId(id);
-        return donatarioRepository.save(donatario);
+    public Donatario update (Donatario donatario){
+        var entity = donatarioRepository.findById(donatario.getId()).get();
+        entity.setNome(donatario.getNome());
+        entity.setEmail(donatario.getEmail());
+        entity.setContato(donatario.getContato());
+        return donatarioRepository.save(entity);
     }
 
     public void delete(Long id){
