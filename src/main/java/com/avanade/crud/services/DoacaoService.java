@@ -3,6 +3,7 @@ package com.avanade.crud.services;
 import com.avanade.crud.domain.Doacao;
 import com.avanade.crud.domain.Doador;
 import com.avanade.crud.domain.Donatario;
+import com.avanade.crud.domain.dtos.DoacaoDTO;
 import com.avanade.crud.repositories.DoacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class DoacaoService {
     @Autowired
     private DonatarioService donatarioService;
 
-    public Doacao findById(Long id) {
+    public Doacao findById(Integer id) {
         Optional<Doacao> obj = doacaoRepository.findById(id);
         return obj.orElseThrow(() -> new RuntimeException("Objeto não encontrado! Id: "+ id));
     }
@@ -31,22 +32,27 @@ public class DoacaoService {
         return doacaoRepository.findAll();
     }
 
-    public Doacao create(@Valid Doacao doacao){
-        return doacaoRepository.save(doacao);
+    public Doacao create(@Valid DoacaoDTO doacaoDTO){
+        return doacaoRepository.save(newDoacao(doacaoDTO));
     }
 
-    public Doacao update (Doacao doacao){
-        var entity = doacaoRepository.findById(doacao.getId()).get();
-        entity.setTitulo(doacao.getTitulo());
-        entity.setObservacoes(doacao.getObservacoes());
-        entity.setDoador(doacao.getDoador());
-        entity.setDonatario(doacao.getDonatario());
-        return doacaoRepository.save(entity);
+    public Doacao update (Integer id,@Valid DoacaoDTO objDTO){
+        objDTO.setId(id);
+        Doacao oldObj = findById(id);
+        oldObj = newDoacao(objDTO);
+        return doacaoRepository.save(oldObj);
     }
 
-    public void delete(Long id){
-        Doacao doacao = findById(id);
-        doacaoRepository.delete(doacao);
-    }
 
+    private Doacao newDoacao(DoacaoDTO obj){
+        Doador doador = doadorService.findById(obj.getDoador());
+        Donatario donatario = donatarioService.findById(obj.getDonatario());
+        Doacao doacao = new Doacao();
+        doacao.setTitulo(obj.getTitulo());
+        doacao.setObservacoes(obj.getObservacoes());
+        doacao.setDoador(doador);
+        doacao.setDonatario(donatario);
+        return doacao;
+
+    }
 }
