@@ -1,6 +1,7 @@
 package com.avanade.crud.resources;
 
 import com.avanade.crud.domain.Doador;
+import com.avanade.crud.domain.dtos.DoadorDTO;
 import com.avanade.crud.services.DoadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,35 +16,38 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/doadores")
 public class DoadorResource {
+
     @Autowired
     private DoadorService doadorService;
 
-    @GetMapping
-    public ResponseEntity<List<Doador>> findAll(){
-        List<Doador> list = doadorService.findAll();
-        return ResponseEntity.ok().body(list);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<DoadorDTO> findById(@PathVariable Integer id){
+        Doador obj = doadorService.findById(id);
+        return ResponseEntity.ok().body(new DoadorDTO(obj));
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Doador> findById(@PathVariable Long id){
-        Doador obj = doadorService.findById(id);
-        return ResponseEntity.ok().body(obj);
+    @GetMapping
+    public ResponseEntity<List<DoadorDTO>> findAll(){
+        List<Doador> list = doadorService.findAll();
+        List<DoadorDTO> listDTO = list.stream().map(obj -> new DoadorDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Doador> create(@Valid @RequestBody Doador obj){
-        Doador newObj = doadorService.create(obj);
-        return ResponseEntity.ok(newObj);
+    public ResponseEntity<DoadorDTO> create(@Valid @RequestBody DoadorDTO objDTO){
+        Doador newObj = doadorService.create(objDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping()
-    public ResponseEntity<Doador> update(@Valid @RequestBody Doador obj){
-        Doador newobj = doadorService.update(obj);
-        return ResponseEntity.ok().body(obj);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DoadorDTO> update(@PathVariable Integer id, @Valid @RequestBody DoadorDTO objDTO){
+        Doador obj = doadorService.update(id, objDTO);
+        return ResponseEntity.ok().body(new DoadorDTO(obj));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Doador> delete(@PathVariable Long id){
+    public ResponseEntity<DoadorDTO> delete(@PathVariable Integer id){
         doadorService.delete(id);
         return ResponseEntity.noContent().build();
     }
