@@ -1,5 +1,7 @@
 package com.avanade.crud.domain;
 
+
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ public class Doacao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private LocalDate dataDoacao = LocalDate.now();
     private String titulo;
     private String observacoes;
@@ -27,7 +29,7 @@ public class Doacao implements Serializable {
     public Doacao() {
     }
 
-    public Doacao(Long id, String titulo, String observacoes, Doador doador, Donatario donatario) {
+    public Doacao(Integer id, String titulo, String observacoes, Doador doador, Donatario donatario) {
         this.id = id;
         this.titulo = titulo;
         this.observacoes = observacoes;
@@ -35,11 +37,11 @@ public class Doacao implements Serializable {
         this.donatario = donatario;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

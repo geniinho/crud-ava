@@ -2,33 +2,45 @@ package com.avanade.crud.domain;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.avanade.crud.domain.dtos.DoadorDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+import javax.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="doador")
 public class Doador extends Pessoa {
     private static final long serialVersionUID = 1L;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "doador")
-    private List<Doacao> doacao = new ArrayList<>();
+    private List<Doacao> doacoes = new ArrayList<>();
 
     public Doador() {
         super();
     }
 
-    public Doador(Long id, String nome, String email, String contato) {
+    public Doador(Integer id, String nome, String email, String contato) {
         super(id, nome, email, contato);
     }
 
+    public Doador(DoadorDTO obj){
+        super();
+        this.id = obj.getId();
+        this.nome = obj.getNome();
+        this.email = obj.getEmail();
+        this.contato = obj.getContato();
+    }
+
     public List<Doacao> getDoacao() {
-        return doacao;
+        return doacoes;
     }
 
     public void setDoacao(List<Doacao> chamados) {
-        this.doacao = doacao;
+        this.doacoes = doacoes;
     }
 }

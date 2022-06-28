@@ -1,9 +1,12 @@
 package com.avanade.crud.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
 
 @MappedSuperclass
 public abstract class Pessoa implements Serializable {
@@ -11,28 +14,31 @@ public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    protected Integer id;
     protected String nome;
+    @Column(unique = true)
     protected String email;
     protected String contato;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
     public Pessoa() {
         super();
     }
 
-    public Pessoa(Long id, String nome, String email, String contato) {
+    public Pessoa(Integer id, String nome, String email, String contato) {
+        super();
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.contato = contato;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

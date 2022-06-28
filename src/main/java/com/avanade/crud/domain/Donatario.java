@@ -2,17 +2,20 @@ package com.avanade.crud.domain;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.avanade.crud.domain.dtos.DonatarioDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="donatario")
 public class Donatario extends Pessoa {
     private static final long serialVersionUID = 1L;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "donatario")
     private List<Doacao> doacoes = new ArrayList<>();
 
@@ -20,8 +23,17 @@ public class Donatario extends Pessoa {
         super();
     }
 
-    public Donatario(Long id, String nome, String email, String contato) {
+    public Donatario(Integer id, String nome, String email, String contato) {
         super(id, nome, email, contato);
+    }
+
+    public Donatario(DonatarioDTO obj){
+        this.id = obj.getId();
+        this.nome = obj.getNome();
+        this.email = obj.getEmail();
+        this.contato = obj.getContato();
+
+
     }
 
     public List<Doacao> getDoacoes() {
@@ -30,5 +42,15 @@ public class Donatario extends Pessoa {
 
     public void setDoacoes(List<Doacao> doacoes) {
         this.doacoes = doacoes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
