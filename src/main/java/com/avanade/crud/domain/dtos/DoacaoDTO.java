@@ -3,6 +3,7 @@ package com.avanade.crud.domain.dtos;
 import com.avanade.crud.domain.Doacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -12,9 +13,13 @@ public class DoacaoDTO implements Serializable {
     private Integer id;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDoacao = LocalDate.now();
+    @NotNull(message = "O campo TÍTULO é requerido!")
     private String titulo;
+    @NotNull(message = "O campo OBSERVAÇÕES é requerido!")
     private String observacoes;
+    @NotNull(message = "O campo DOADOR é requerido!")
     private Integer doador;
+    @NotNull(message = "O campo DONATÁRIO é requerido!")
     private Integer donatario;
     private String nomeDoador;
     private String nomeDonatario;
