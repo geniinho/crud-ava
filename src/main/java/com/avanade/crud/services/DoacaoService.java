@@ -5,6 +5,9 @@ import com.avanade.crud.domain.Doador;
 import com.avanade.crud.domain.Donatario;
 import com.avanade.crud.domain.dtos.DoacaoDTO;
 import com.avanade.crud.repositories.DoacaoRepository;
+import com.avanade.crud.repositories.DoadorRepository;
+import com.avanade.crud.repositories.DonatarioRepository;
+import com.avanade.crud.services.exceptions.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,13 @@ import java.util.Optional;
 
 @Service
 public class DoacaoService {
+
+    @Autowired
+    private DoadorRepository doadorRepository;
+
+    @Autowired
+    private DonatarioRepository donatarioRepository;
+
     @Autowired
     private DoacaoRepository doacaoRepository;
 
@@ -33,6 +43,7 @@ public class DoacaoService {
     }
 
     public Doacao create(@Valid DoacaoDTO doacaoDTO){
+        validaDoadorEDonatario(doacaoDTO);
         return doacaoRepository.save(newDoacao(doacaoDTO));
     }
 
@@ -53,6 +64,14 @@ public class DoacaoService {
         doacao.setDoador(doador);
         doacao.setDonatario(donatario);
         return doacao;
+    }
 
+    private void validaDoadorEDonatario(DoacaoDTO doacaoDTO){
+        Optional<Doador> doador = doadorRepository.findById(doacaoDTO.getDoador());
+        Optional<Donatario> donatario = donatarioRepository.findById(doacaoDTO.getDonatario());
+
+        if (doador.isEmpty() || donatario.isEmpty()){
+            throw new DataIntegrityViolationException("Doador ou donatario não encontrados.");
+        }
     }
 }
