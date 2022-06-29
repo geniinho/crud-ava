@@ -6,8 +6,9 @@ import com.avanade.crud.domain.Donatario;
 import com.avanade.crud.domain.dtos.DonatarioDTO;
 import com.avanade.crud.repositories.DonatarioRepository;
 import com.avanade.crud.repositories.PessoaRepository;
+import com.avanade.crud.services.exceptions.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;

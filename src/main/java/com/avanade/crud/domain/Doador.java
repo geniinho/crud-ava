@@ -3,7 +3,6 @@ package com.avanade.crud.domain;
 
 
 import com.avanade.crud.domain.dtos.DoadorDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
@@ -15,8 +14,6 @@ import java.util.List;
 public class Doador extends Pessoa {
     private static final long serialVersionUID = 1L;
 
-
-    @JsonIgnore
     @OneToMany(mappedBy = "doador")
     private List<Doacao> doacoes = new ArrayList<>();
 

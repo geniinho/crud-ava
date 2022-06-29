@@ -1,7 +1,7 @@
 package com.avanade.crud.domain.dtos;
 
 
-import com.avanade.crud.domain.Doacao;
+
 import com.avanade.crud.domain.Donatario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -9,9 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DonatarioDTO implements Serializable {
 
@@ -26,7 +23,6 @@ public class DonatarioDTO implements Serializable {
     protected String contato;
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
-
 
     public DonatarioDTO(){
         super();
@@ -80,4 +76,5 @@ public class DonatarioDTO implements Serializable {
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
 }
