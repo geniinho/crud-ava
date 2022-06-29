@@ -42,6 +42,8 @@ public class DoadorService {
     public Doador update (Integer id, @Valid DoadorDTO objDTO){
         objDTO.setId(id);
         Doador oldObj = findById(id);
+        validaPorEmail(objDTO);
+        oldObj = new Doador(objDTO);
         return doadorRepository.save(oldObj);
     }
 

@@ -1,6 +1,7 @@
 package com.avanade.crud.services;
 
 
+import com.avanade.crud.domain.Doador;
 import com.avanade.crud.domain.Donatario;
 
 import com.avanade.crud.domain.dtos.DonatarioDTO;
@@ -42,6 +43,8 @@ public class DonatarioService {
     public Donatario update (Integer id, @Valid DonatarioDTO objDTO){
         objDTO.setId(id);
         Donatario oldObj = findById(id);
+        validaPorEmail(objDTO);
+        oldObj = new Donatario(objDTO);
         return donatarioRepository.save(oldObj);
     }
 
