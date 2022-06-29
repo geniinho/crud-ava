@@ -35,7 +35,7 @@ public class DoacaoService {
 
     public Doacao findById(Integer id) {
         Optional<Doacao> obj = doacaoRepository.findById(id);
-        return obj.orElseThrow(() -> new RuntimeException("Objeto não encontrado! Id: "+ id));
+        return obj.orElseThrow(() -> new RuntimeException("Doação não encontrada! Id: "+ id));
     }
 
     public List<Doacao> findAll() {
@@ -71,7 +71,7 @@ public class DoacaoService {
         Optional<Donatario> donatario = donatarioRepository.findById(doacaoDTO.getDonatario());
 
         if (doador.isEmpty() || donatario.isEmpty()){
-            throw new DataIntegrityViolationException("Doador ou donatario não encontrados.");
+            throw new DataIntegrityViolationException("Doador ou donatário não encontrados.");
         }
     }
 }

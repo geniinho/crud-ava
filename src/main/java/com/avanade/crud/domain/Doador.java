@@ -33,7 +33,7 @@ public class Doador extends Pessoa {
         this.contato = obj.getContato();
     }
 
-    public List<Doacao> getDoacao() {
+    public List<Doacao> getDoacoes() {
         return doacoes;
     }
 

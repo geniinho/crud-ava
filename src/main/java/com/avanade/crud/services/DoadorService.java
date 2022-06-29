@@ -25,7 +25,7 @@ public class DoadorService {
 
     public Doador findById(Integer id) {
         Optional<Doador> obj = doadorRepository.findById(id);
-        return obj.orElseThrow(() -> new RuntimeException("Objeto não encontrado! Id: "+ id));
+        return obj.orElseThrow(() -> new RuntimeException("Doador não encontrado! Id: "+ id));
     }
 
     public List<Doador> findAll() {
@@ -49,7 +49,7 @@ public class DoadorService {
 
     public void delete(Integer id){
         Doador doador = findById(id);
-        if(doador.getDoacao().size()>0) {
+        if(doador.getDoacoes().size()>0) {
             throw new DataIntegrityViolationException("O Doador possui doações e não pode ser deletado!");
         }
         doadorRepository.deleteById(id);

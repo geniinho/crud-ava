@@ -26,7 +26,7 @@ public class DonatarioService {
 
     public Donatario findById(Integer id) {
         Optional<Donatario> obj = donatarioRepository.findById(id);
-        return obj.orElseThrow(() -> new RuntimeException("Objeto não encontrado! Id: "+ id));
+        return obj.orElseThrow(() -> new RuntimeException("Donatário não encontrado! Id: "+ id));
     }
 
     public List<Donatario> findAll() {
@@ -51,7 +51,7 @@ public class DonatarioService {
     public void delete(Integer id){
         Donatario donatario = findById(id);
         if(donatario.getDoacoes().size()>0) {
-            throw new DataIntegrityViolationException("O Donatario já recebeu doações e não pode ser deletado!");
+            throw new DataIntegrityViolationException("O Donatário já recebeu doações e não pode ser deletado!");
         }
         donatarioRepository.deleteById(id);
     }
